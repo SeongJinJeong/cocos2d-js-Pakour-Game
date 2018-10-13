@@ -87,3 +87,19 @@ var MenuLayer = cc.Layer.extend({
     }
 });
 ```
+
+#### 현재 모든 Layer를 완성시켰으니 이제 레이어들을 합쳐 Scene을 구성하면 된다.
+
+3. Scene 만들기!
+
+```javascript
+var MenuScene = cc.Scene.extend({
+    onEnter:function () {
+        this._super();
+        var layer = new MenuLayer();
+        layer.init();
+        this.addChild(layer);
+    }
+});
+```
+Scene이 생성되면 onEnter function을 선언해야 한다. Ctor fucntion 도 선언할 수 있고, 선언하게 된다면 onEnter function은 Ctor 다음에 실행된다.
