@@ -103,3 +103,151 @@ var MenuScene = cc.Scene.extend({
 });
 ```
 Scene이 생성되면 onEnter function을 선언해야 한다. Ctor fucntion 도 선언할 수 있고, 선언하게 된다면 onEnter function은 Ctor 다음에 실행된다.
+
+
+### Second Step!
+이제 초기 화면을 만들었으니 플레이 화면을 만들 차례다. 이번 장에서는 Start 버튼을 누르면 플레이화면으로 넘어가도록 만들것이다.
+
+1. 플레이화면의 배경이미지와 캐릭터 이미지 다운받기!
+https://github.com/dalinaum/chukong-cocos-docs/tree/master/tutorial/framework/html5/parkour-game-with-javascript-v3.0/chapter4/res
+위의 링크에서 PlayBG.png 와 runner.png 이미지를 받는다.
+그리고 res폴더안에 두개의 이미지를 넣는다.
+
+2. 3개의 js 파일 만들기!
+일단은 BackgroundLayer, AnimationLayer, StatusLayer 총 세개의 Layer를 만들것이며, 각 레이어들을 js 파일로 분리하고, PlayScene.js 파일로 Layer파일들을 합칠것이다.
+src 폴더안에 BackgroundLayer.js , AnimationLayer.js, StatusLayer.js 총 세개의 파일과 PlayScene.js 파일을 만들어 넣어놓는다.
+
+3. resource.js 파일 수정하기!
+resource.js 파일은 res 폴더 안의 파일들을 불러오는데 쓰인다. 따라서 PlayBG.png 와 runner.png 이미지를 사용하기 위해서는 resource.js 파일을 통해 이미지를 불러와야 한다.
+```javascript
+var res = {
+    helloBG_png : "res/helloBG.png",
+    start_n_png : "res/start_n.png",
+    start_s_png : "res/start_s.png",
+    PlayBG_png  : "res/PlayBG.png",
+    runner_png  : "res/runner.png"
+};
+
+var g_resources = [
+    //image
+    res.helloBG_png,
+    res.start_n_png,
+    res.start_s_png,
+    res.PlayBG_png,
+    res.runner_png
+];
+```
+위와 같이 resource.js 파일을 수정하면 'res.파일이름' 을 통해 이미지를 사용할 수 있게 된다.
+
+4. project.json 파일 수정하기!
+
+project.json 파일은 게임을 실행시킬때 불러와야 할 파일들을 호출한다. 초기에는 app.js와 resource.js 파일밖에 불러올게 없었지만 이제 4개의 파일들이 추가되었기 떄문에 project.json을 통해 불러올 4개의 파일을 추가시켜야 한다.
+```json
+ "jsList" : [
+        "src/resource.js",
+        "src/app.js",
+        "src/AnimationLayer.js",
+        "src/BackgroundLayer.js",
+        "src/PlayScene.js",
+        "src/StatusLayer.js"
+    ]
+```
+위와같이 jsList 에 불러올 파일의 경로를 적어주면 된다.
+
+#### 코드 작성하기!
+이제 우리가 만든 파일에 코드를 작성할 차례이다.
+
+1. PlayScene.js 작성하기!
+
+Background, Status, Animation Layer들이 모두 다른 파일으로 되어있기 떄문에 PlayScene.js 에서 addChild 메소드를 통해 하나로 합치면 된다.
+```javascript
+var PlayScene = cc.Scene.extend({
+    onEnter:function () {
+        this._super();
+        //add three layer in the right order
+        this.addChild(new BackgroundLayer());
+        this.addChild(new AnimationLayer());
+        this.addChild(new StatusLayer());
+    }
+});
+```
+
+2. BackgroundLayer.js 작성하기!
+배경사진만 넣으면 되므로 이미지 Sprite 하나를 추가해주면 된다.
+```javascript
+var BackgroundLayer = cc.Layer.extend({
+    ctor:function () {
+        this._super();
+        this.init();
+    },
+
+    init:function () {
+        this._super();
+        var winsize = cc.director.getWinSize();
+
+        //create the background image and position it at the center of screen
+        var centerPos = cc.p(winsize.width / 2, winsize.height / 2);
+        var spriteBG = new cc.Sprite(res.PlayBG_png);
+        spriteBG.setPosition(centerPos);
+        this.addChild(spriteBG);
+    }
+});
+```
+app.js 에서 했던것처럼 화면의 중간위치를 구한다음, 이미지를 적용시키면 된다.
+
+3. AnimationLayer.js 작성하기!
+이 과정에서는 MoveTo 메소드를 이용해 runner.png를 (80,85) 위치에서 (300,85)로 이동시킬것이다.
+```javascript
+var AnimationLayer = cc.Layer.extend({
+    ctor:function () {
+        this._super();
+        this.init();
+    },
+    init:function () {
+        this._super();
+
+        //create the hero sprite
+        var spriteRunner = new cc.Sprite(res.runner_png);
+        spriteRunner.attr({x: 80, y: 85});
+
+        //create the move action
+        var actionTo = new cc.MoveTo(2, cc.p(300, 85));
+        spriteRunner.runAction(new cc.Sequence(actionTo));
+        this.addChild(spriteRunner);
+    }
+});
+```
+spriteRunner를 생성한 후, 초기 위치를 x는 80 y는 85로 정해줬다.
+그리고 actionTo 를 생성한 뒤에, runAction 메소드를 통해 spriteRunner에 적용시켰다.
+
+4. StatusLayer.js 작성하기!
+이 과정에서는 이미지가 아닌 텍스트를 이용해 HUD 정보를 띄울 것이다.
+텍스트는 LabelTTF 메소드를 통해 생성할 수 있다.
+LabelTTF는 cc.LabelTTF(글자,폰트,폰트사이즈,정의 등)으로 사용하면 된다.
+```javascript
+var StatusLayer = cc.Layer.extend({
+    labelCoin:null,
+    labelMeter:null,
+    coins:0,
+
+    ctor:function () {
+        this._super();
+        this.init();
+    },
+
+    init:function () {
+        this._super();
+
+        var winsize = cc.director.getWinSize();
+
+        this.labelCoin = new cc.LabelTTF("Coins:0", "Helvetica", 20);
+        this.labelCoin.setColor(cc.color(0,0,0));//black color
+        this.labelCoin.setPosition(cc.p(70, winsize.height - 20));
+        this.addChild(this.labelCoin);
+
+        this.labelMeter = new cc.LabelTTF("0M", "Helvetica", 20);
+        this.labelMeter.setPosition(cc.p(winsize.width - 70, winsize.height - 20));
+        this.addChild(this.labelMeter);
+    }
+});
+```
