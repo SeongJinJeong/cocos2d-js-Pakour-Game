@@ -1,5 +1,3 @@
-
-
 var MenuLayer = cc.Layer.extend({
     ctor : function(){
         //1. call super class's ctor function
@@ -33,7 +31,9 @@ var MenuLayer = cc.Layer.extend({
         this.addChild(menu);
     },
 
+    //this is the callback when the menu is clicked
     onPlay : function(){
+        cc.director.runScene(new PlayScene());
         cc.log("==onplay clicked");
     }
 });
