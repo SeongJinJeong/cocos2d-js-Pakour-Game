@@ -26,3 +26,64 @@ Scene ....
 ....
 
 = 게임 완성!
+
+
+### First Step!
+1. src/resource.js 파일을 전부 지우고 다시 작성해 준다.
+```javascript
+var res = {
+    helloBG_png : "res/helloBG.png",
+    start_n_png : "res/start_n.png",
+    start_s_png : "res/start_s.png"
+};
+
+var g_resources = [
+    //image
+    res.helloBG_png,
+    res.start_n_png,
+    res.start_s_png
+];
+```
+resource.js 파일은 res파일에 있는 이미지를 불러오는데 쓰인다.
+
+2. src/app.js 파일을 전부 지우고 다시 작성해 준다.
+
+```javascript
+var MenuLayer = cc.Layer.extend({
+    ctor : function(){
+        //1. super 클래스의 ctor function 불러온다.
+        this._super();
+    },
+    init:function(){
+        //super 클래스의 super function 을 불러온다.
+        this._super();
+
+        //2. 게임화면의 크기를 불러온다.
+        var winsize = cc.director.getWinSize();
+
+        //3. 중간지점을 지정해 준다.
+        var centerpos = cc.p(winsize.width / 2, winsize.height / 2);
+
+        //4. 3번의 중간지점을 이용해 이미지를 불러온다음 중간에 위치시킨다.
+        var spritebg = new cc.Sprite(res.helloBG_png);
+        spritebg.setPosition(centerpos);
+        this.addChild(spritebg);
+
+        //5.
+        cc.MenuItemFont.setFontSize(60);
+
+        //6.메뉴를 만든다음 onPlay 콜백 이벤트를 배치시킨다.
+        var menuItemPlay = new cc.MenuItemSprite(
+            new cc.Sprite(res.start_n_png), // normal state image
+            new cc.Sprite(res.start_s_png), // select state image
+            this.onPlay, this);
+        var menu = new cc.Menu(menuItemPlay);  //7. create the menu
+        menu.setPosition(centerpos);
+        this.addChild(menu);
+    },
+
+    onPlay : function(){
+        cc.log("==onplay clicked");
+    }
+});
+```
