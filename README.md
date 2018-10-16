@@ -269,3 +269,11 @@ TexturePakcer를 통해 애니메이션을 만드는 방법을 알아보겠다.
 먼저 https://github.com/dalinaum/chukong-cocos-docs/tree/master/tutorial/framework/html5/parkour-game-with-javascript-v3.0/chapter5/code/res/TexturePacker 이 주소를 통해 runner0 부터 runner07까지의 이미지를 모두 res/TexturePacker 폴더에 넣어준다.
 그리고 TexturePakcer를 실행시킨다.
 ![TexturePacker01](./gitImage/TexturePacker01.PNG)
+
+실행시킨 화면이다.
+
+그 다음 파란색 동그라미 부분인 Add sprites를 눌러서 아까 받아놓은 이미지들을 불러온다.
+![TexturePacker02](./gitImage/TexturePacker02.PNG)
+
+마지막으로 아래의 그림을 보고 프레임워크와 경로 이미지등을 받아놓는다.
+![TexturePacker03](./gitImage/TexturePacker03.PNG)
