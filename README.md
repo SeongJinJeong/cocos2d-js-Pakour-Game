@@ -1,5 +1,7 @@
 ## cocos2d-js 로 파쿠르 게임 만들기!
 
+### https://github.com/dalinaum/chukong-cocos-docs 를 보고 따라하는 중입니다.
+
 ### cocos2d-js 웹 TIP!
 
 #### 파일의 변경사항이 적용이 안될떄
@@ -280,3 +282,67 @@ TexturePakcer를 통해 애니메이션을 만드는 방법을 알아보겠다.
 
 그렇게 되면 경로를 설정한 곳에 다음과 같이 running.plist 와 running.png 가 만들어져 있을것이다.
 ![TexturePacker04](./gitImage/TexturePacker04.PNG)
+
+### 코드 작성하기!
+애니메이션을 만들었으니 이제 코드를 작성할 차례이다. 
+1. 먼저 아까만든 running.plist 와 running.png 를 불러오는 코드를 추가한다.(resource.js에 추가)
+```javascript
+var res = {
+    helloBG_png : "res/helloBG.png",
+    start_n_png : "res/start_n.png",
+    start_s_png : "res/start_s.png",
+    PlayBG_png  : "res/PlayBG.png",
+    runner_png  : "res/running.png",
+    runner_plist : "res/running.plist"
+};
+
+var g_resources = [
+    //image
+    res.helloBG_png,
+    res.start_n_png,
+    res.start_s_png,
+    res.PlayBG_png,
+    res.runner_png,
+    res.runner_plist
+];
+```
+* 주의 : running.png 와 running.plist 를 runner_png 와 runner_plist로 바꿧기 때문에 코드를 작성할 때 유의하여야 한다.
+
+2. AnimationLayer 작성하기
+```javascript
+var AnimationLayer = cc.Layer.extend({
+    // 1 .변수 만들기
+    spriteSheet:null,
+    runningAction:null,
+    sprite:null,
+    ctor:function () {
+        this._super();
+        this.init();
+    },
+
+    init:function () {
+        this._super();
+
+        // sprite sheet 만들기
+        cc.spriteFrameCache.addSpriteFrames(res.runner_plist);
+        this.spriteSheet = new cc.SpriteBatchNode(res.runner_png);
+        this.addChild(this.spriteSheet);
+
+
+        // runningAction 초기화
+        var animFrames = [];
+        for (var i = 0; i < 8; i++) {
+            var str = "runner" + i + ".png";
+            var frame = cc.spriteFrameCache.getSpriteFrame(str);
+            animFrames.push(frame);
+        }
+
+        var animation = new cc.Animation(animFrames, 0.1);  //aniFrames을 0.1 딜레이 주기
+        this.runningAction = new cc.RepeatForever(new cc.Animate(animation));
+        this.sprite = new cc.Sprite("#runner0.png");
+        this.sprite.attr({x:80, y:85});
+        this.sprite.runAction(this.runningAction);
+        this.spriteSheet.addChild(this.sprite);
+    }
+});
+```
