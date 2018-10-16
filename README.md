@@ -275,5 +275,5 @@ TexturePakcer를 통해 애니메이션을 만드는 방법을 알아보겠다.
 그 다음 파란색 동그라미 부분인 Add sprites를 눌러서 아까 받아놓은 이미지들을 불러온다.
 ![TexturePacker02](./gitImage/TexturePacker02.PNG)
 
-마지막으로 아래의 그림을 보고 프레임워크와 경로 이미지등을 받아놓는다.
+마지막으로 아래의 그림을 보고 프레임워크와 경로 이미지등을 설정하고, 위쪽의 Publish sprite sheet 버튼을 눌러준다.
 ![TexturePacker03](./gitImage/TexturePacker03.PNG)
