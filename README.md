@@ -323,13 +323,13 @@ var AnimationLayer = cc.Layer.extend({
     init:function () {
         this._super();
 
-        // sprite sheet 만들기
+        // 2. sprite sheet 만들기
         cc.spriteFrameCache.addSpriteFrames(res.runner_plist);
         this.spriteSheet = new cc.SpriteBatchNode(res.runner_png);
         this.addChild(this.spriteSheet);
 
 
-        // runningAction 초기화
+        // 3. runningAction 초기화
         var animFrames = [];
         for (var i = 0; i < 8; i++) {
             var str = "runner" + i + ".png";
@@ -337,7 +337,7 @@ var AnimationLayer = cc.Layer.extend({
             animFrames.push(frame);
         }
 
-        var animation = new cc.Animation(animFrames, 0.1);  //aniFrames을 0.1 딜레이 주기
+        var animation = new cc.Animation(animFrames, 0.1);  // 4. aniFrames을 0.1 딜레이 주기
         this.runningAction = new cc.RepeatForever(new cc.Animate(animation));
         this.sprite = new cc.Sprite("#runner0.png");
         this.sprite.attr({x:80, y:85});
@@ -346,3 +346,5 @@ var AnimationLayer = cc.Layer.extend({
     }
 });
 ```
+
+AnimationLayer에 위 코드를 써주면 이제 캐릭터가 달리는 모션을 하고있는것을 볼 수 있을것이다.
