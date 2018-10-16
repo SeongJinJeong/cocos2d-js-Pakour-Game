@@ -259,3 +259,13 @@ var StatusLayer = cc.Layer.extend({
     }
 });
 ```
+
+
+### 애니메이션 만들기!
+이번에는 애니메이션을 작동시키는 법을 알아보자! 그전에 먼저 TexturePacker 라는 툴을 다운받아 놓는다.
+TexturePakcer를 통해 애니메이션을 만드는 방법을 알아보겠다.
+
+#### TexturePacker로 애니메이션 만들기!
+먼저 https://github.com/dalinaum/chukong-cocos-docs/tree/master/tutorial/framework/html5/parkour-game-with-javascript-v3.0/chapter5/code/res/TexturePacker 이 주소를 통해 runner0 부터 runner07까지의 이미지를 모두 res/TexturePacker 폴더에 넣어준다.
+그리고 TexturePakcer를 실행시킨다.
+![TexturePacker01](./gitImage/TexturePacker01.png)
