@@ -48,5 +48,8 @@ var AnimationLayer = cc.Layer.extend({
         this.sprite.runAction(this.runningAction);
 
         this.spriteSheet.addChild(this.sprite);
-    }
+    },
+    getEyeX:function () {
+    return this.sprite.getPositionX() - g_runnerStartX;
+    },
 });
