@@ -8,6 +8,8 @@ var res = {
     map_png : "res/map.png",
     map00_tmx : "res/map00.tmx",
     map01_tmx : "res/map01.tmx",
+    background_png : "res/background.png",
+    background_plist : "res/background.plist",
 };
 
 var g_resources = [
@@ -21,4 +23,6 @@ var g_resources = [
     res.map_png,
     res.map00_tmx,
     res.map01_tmx,
+    res.background_png,
+    res.background_plist,
 ];

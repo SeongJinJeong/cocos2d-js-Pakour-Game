@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="20" height="10" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="map" tilewidth="32" tileheight="32">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="21">
+ <tileset firstgid="1" name="map" tilewidth="32" tileheight="32" tilecount="16" columns="4">
   <image source="map.png" width="128" height="128"/>
  </tileset>
- <layer name="background" width="20" height="10">
+ <layer id="1" name="background" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJzjZmBg4B7Fo3iAMDMQsyDRjEDMBMScQMyFRRxdHsaHqWMHYg4kmhWI2YCYF4j5sIijy8P4MHUANJMHzQ==
   </data>
  </layer>
- <layer name="grass" width="20" height="10">
+ <layer id="2" name="grass" width="20" height="10">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo4B4wA/EAlSkBzsAAPeoATc=
   </data>
  </layer>
+ <objectgroup id="6" name="coin">
+  <object id="11" x="190" y="190"/>
+  <object id="12" x="226" y="158"/>
+  <object id="13" x="261" y="165"/>
+  <object id="14" x="292" y="193"/>
+  <object id="15" x="516" y="111"/>
+  <object id="16" x="516" y="111"/>
+  <object id="17" x="515" y="147"/>
+  <object id="18" x="515" y="183"/>
+  <object id="19" x="37" y="100"/>
+  <object id="20" x="37" y="161"/>
+ </objectgroup>
+ <objectgroup id="7" name="rock">
+  <object id="9" x="131" y="225"/>
+  <object id="10" x="384" y="226"/>
+ </objectgroup>
 </map>

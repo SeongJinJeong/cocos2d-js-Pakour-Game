@@ -52,4 +52,8 @@ var AnimationLayer = cc.Layer.extend({
     getEyeX:function () {
     return this.sprite.getPositionX() - g_runnerStartX;
     },
+    update : function(dt){
+        var statusLayer = this.getParent().getParent().getChildByTag(TagOfLayer.Status);
+        statusLayer.updateMeter(this.sprite.getPositionX() - g_runnerStartX);
+    }
 });
